@@ -11,16 +11,15 @@ import (
 var tmpUsers = map[string]User{}
 
 type User struct {
-	ID 			string		`json:"id"`
-	Name 		string 		`json:"name"`
-	Password 	string 		`json:"password"`
-	Description	string 		`json:"description"`
-	CreatedAt 	time.Time 	`json:"created_at"`
-	UpdatedAt 	time.Time	`json:"updated_at"`
+	ID          string    `json:"id"`
+	Name        string    `json:"name"`
+	Password    string    `json:"password"`
+	Description string    `json:"description"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 type Users []User
-
 
 func RegistUser(user User) (User, error) {
 	date := time.Now()
@@ -66,11 +65,11 @@ func UpdateUser(newUser User) (User, error) {
 	newUser.CreatedAt = date
 	newUser.UpdatedAt = date
 
-	tmpUsers[newUser.ID] =newUser
+	tmpUsers[newUser.ID] = newUser
 	return newUser, nil
 }
 
-func DeleteUser(id string)error {
+func DeleteUser(id string) error {
 	if _, err := ReadUser(id); err != nil {
 		return err
 	}

@@ -80,8 +80,8 @@ func UserReader(w http.ResponseWriter, r *http.Request) {
 
 	users, err := model.ListUser()
 	if err != nil {
-		 newHTTPError(w, err)
-		 return
+		newHTTPError(w, err)
+		return
 	}
 
 	newHTTPResponse(w, http.StatusOK, users)
@@ -98,8 +98,8 @@ func UserDeleter(w http.ResponseWriter, r *http.Request) {
 	}
 
 	successMessage := struct {
-		code 	int 	`json:"code"`
-		Message string	`json:"message"`
+		code    int    `json:"code"`
+		Message string `json:"message"`
 	}{
 		http.StatusOK,
 		fmt.Sprintf("Success delete user=[%s]", id),
@@ -108,11 +108,9 @@ func UserDeleter(w http.ResponseWriter, r *http.Request) {
 	newHTTPResponse(w, http.StatusOK, successMessage)
 }
 
-
-func NotFoundResources(w http.ResponseWriter, r * http.Request) {
+func NotFoundResources(w http.ResponseWriter, r *http.Request) {
 	newHTTPError(w, common.NewError(http.StatusNotFound, "Not found resources"))
 }
-
 
 func newHTTPError(w http.ResponseWriter, err error) {
 	errMessage := err.(common.ErrorMessage)
@@ -140,7 +138,6 @@ func getUserID(r *http.Request) (string, error) {
 	return id, nil
 }
 
-
 func structToResponseBody(data interface{}) []byte {
 	json, err := json.Marshal(&data)
 
@@ -164,7 +161,7 @@ func checkHeader(r *http.Request) error {
 		code := http.StatusBadRequest
 		if r.Header.Get("Content-type") != "application/json" {
 			return common.NewError(code, "Content-type is not application/json")
-			}
+		}
 
 		if r.ContentLength == 0 {
 			return common.NewError(code, "Request body length is 0")
