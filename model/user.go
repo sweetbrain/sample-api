@@ -1,9 +1,11 @@
-package main
+package model
 
 import (
 	"net/http"
 	"time"
-	"github.com/sweetbrain/sample-api/common"
+
+	"../common"
+	"github.com/satori/go.uuid"
 )
 
 var tmpUsers = map[string]User{}
@@ -19,6 +21,7 @@ type User struct {
 
 type Users []User
 
+
 func RegistUser(user User) (User, error) {
 	date := time.Now()
 	user.CreatedAt = date
@@ -26,7 +29,7 @@ func RegistUser(user User) (User, error) {
 
 	id, err := uuid.NewV4()
 	if err != nil {
-		return user, NewError(http.StatusInternalServerError, err.Error())
+		return user, common.NewError(http.StatusInternalServerError, err.Error())
 	}
 	user.ID = id.String()
 
@@ -39,7 +42,7 @@ func ReadUser(id string) (User, error) {
 	user, exist := tmpUsers[id]
 
 	if !exist {
-		return user, NewError(http.StatusNotFound, "not found user")
+		return user, common.NewError(http.StatusNotFound, "not found user")
 	}
 	return user, nil
 }
